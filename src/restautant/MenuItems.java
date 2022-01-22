@@ -1,11 +1,22 @@
 package restautant;
 
+import java.util.ArrayList;
+
 public class MenuItems {
     private String itemName;
+    private double price;
     private String description;
     private String category;
-    private Double price;
     private Boolean isNew;
+
+
+    public MenuItems(String itemName, double price, String description, String category, Boolean isNew) {
+        this.itemName = itemName;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.isNew = isNew;
+    }
 
     public String getItemName() {
         return itemName;
@@ -13,6 +24,14 @@ public class MenuItems {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getDescription() {
@@ -31,14 +50,6 @@ public class MenuItems {
         this.category = category;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public Boolean getNew() {
         return isNew;
     }
@@ -47,3 +58,5 @@ public class MenuItems {
         isNew = aNew;
     }
 }
+
+
