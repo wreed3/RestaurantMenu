@@ -1,92 +1,208 @@
 package restautant;
 
-import java.util.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-import static restautant.Menu.printMenuItem;
-import static restautant.Menu.printMenuItems;
 public class Restaurant {
-
-
-    public static void main(String[] args) {
-        // write your code here
-        Date lastUpdated = new Date();
-
-        Boolean printEntireMenu = true;
-        Scanner input = new Scanner(System.in);
-
-        MenuItems menuItem1 = new MenuItems("Pepperoni Pizza", 20.00, "The best pepperoni pizza that you have ever tasted!", "Pizza", false );
-        MenuItems menuItem2 = new MenuItems("Veggie Pizza", 15.00, "The best veggie pizza that you have ever tasted!", "Pizza", false);
-        MenuItems menuItem3 = new MenuItems("Supreme Pizza", 25.00, "The Best supreme of all supreme pizzas!", "Pizza", false);
-        MenuItems menuItem4 = new MenuItems("The Real Deal", 30.00, "The Godfather of all Pizzas!", "Pizza", true);
-        MenuItems menuItem5 = new MenuItems("Apple Pizza Pie", 15.00, "When you're crazing something sweet there is only one solution", "Dessert",true);
-        MenuItems menuItem6 = new MenuItems("Sizzling Wings", 12.50, "Wings that will give you wings!", "Sides", true);
-        MenuItems menuItem7 = new MenuItems ("Romaine insane salad", 10.00, "The best Romaine salad you have ever tasted", "Sides", true);
-        MenuItems menuItem8 = new MenuItems("Cheesey Bread",5.0,"Who said bread couldn't be cheesy!", "Sides",false);
-        MenuItems menuItem9 = new MenuItems("Cinnamon sticks", 5.0, "Satisfy your sweet tooth!", "Dessert", true);
-
-        ArrayList<MenuItems> menuItem = new ArrayList<>();
-        Menu basicMenu = new Menu(lastUpdated,menuItem);
-
-        basicMenu.addMenuItem(menuItem1);
-        basicMenu.addMenuItem(menuItem2);
-        basicMenu.addMenuItem(menuItem3);
-        basicMenu.addMenuItem(menuItem4);
-        basicMenu.addMenuItem(menuItem5);
-        basicMenu.addMenuItem(menuItem6);
-        basicMenu.addMenuItem(menuItem7);
-        basicMenu.addMenuItem(menuItem8);
-        basicMenu.addMenuItem(menuItem9);
-
-//        System.out.println("\n\n");
-        System.out.print("*** WELCOME to the PIZZA DEPOT ***");
-        System.out.print("\nWhere everything everything that we\n" + "have will be the best you ever tasted!\n\n");
-        System.out.println("Do you want to view the entire menu? \nType: \n( yes ) - To see the entire menu \n( no ) - To search for a menu item");
-
-        String response = input.nextLine();
-        response = response.toLowerCase();
-
-        if(response.equals("yes")){
-            System.out.println("\n---------MENU----------");
-            System.out.println(lastUpdated);
-            System.out.println("\n");
-            System.out.println("---PIZZA---");
-            printMenuItems(menuItem, "Pizza");
-//
-            System.out.println("\n\n---SIDES---");
-            printMenuItems(menuItem, "Sides");
-            System.out.println("\n\n---DESSERTS---");
-            printMenuItems(menuItem, "Dessert");
-        }else {
-            System.out.println("What menu item would you like to search: ");
-            String response2 = input.nextLine();
-            System.out.println("---------MENU----------");
-            System.out.println(lastUpdated);
-            printMenuItem(menuItem, response2);
-
-        }
-
-        System.out.println("The menu is getting too long. Please enter in a menu item to remove");
-        String response3 = input.nextLine();
-        basicMenu.removeMenuItem(menuItem, response3);
-        System.out.println("Here is the menu");
-        System.out.println("\n---------MENU----------");
-        System.out.println(lastUpdated);
-        System.out.println("\n");
-        System.out.println("---PIZZA---");
-        printMenuItems(menuItem, "Pizza");
-//
-        System.out.println("\n\n---SIDES---");
-        printMenuItems(menuItem, "Sides");
-        System.out.println("\n\n---DESSERTS---");
-        printMenuItems(menuItem, "Dessert");
+    private String name;
+    private Menu menu;
+    private Scanner scanner;
+    
+    public Restaurant(String name) {
+        this.name = name;
+        this.menu = new Menu("menu_items.csv"); // Load from file
+        this.scanner = new Scanner(System.in);
     }
-
-
-
+    
+    public void run() {
+        System.out.println("\n" + "=".repeat(60));
+        System.out.println("          Welcome to " + name + "!");
+        System.out.println("=".repeat(60));
+        
+        while (true) {
+            displayMainMenu();
+            
+            int choice = getIntInput("Choose option: ");
+            System.out.println();
+            
+            switch (choice) {
+                case 1:
+                    viewFullMenu();
+                    break;
+                case 2:
+                    viewByCategory();
+                    break;
+                case 3:
+                    addNewItem();
+                    break;
+                case 4:
+                    removeItem();
+                    break;
+                case 5:
+                    updateItem();
+                    break;
+                case 6:
+                    searchItem();
+                    break;
+                case 7:
+                    reloadMenu();
+                    break;
+                case 8:
+                    System.out.println("Thank you for visiting " + name + "!");
+                    System.out.println("Goodbye!");
+                    return;
+                default:
+                    System.out.println("⚠ Invalid option. Please try again.");
+            }
+            
+            System.out.println("\nPress Enter to continue...");
+            scanner.nextLine();
+        }
+    }
+    
+    private void displayMainMenu() {
+        System.out.println("\n" + "=".repeat(60));
+        System.out.println("                    MENU OPTIONS");
+        System.out.println("=".repeat(60));
+        System.out.println("  1. View full menu");
+        System.out.println("  2. View by category");
+        System.out.println("  3. Add new item");
+        System.out.println("  4. Remove item");
+        System.out.println("  5. Update item");
+        System.out.println("  6. Search for item");
+        System.out.println("  7. Reload menu from file");
+        System.out.println("  8. Exit");
+        System.out.println("=".repeat(60));
+    }
+    
+    private void viewFullMenu() {
+        menu.displayMenu();
+    }
+    
+    private void viewByCategory() {
+        List<String> categories = menu.getCategories();
+        
+        if (categories.isEmpty()) {
+            System.out.println("No categories available.");
+            return;
+        }
+        
+        System.out.println("Available categories:");
+        for (int i = 0; i < categories.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + categories.get(i));
+        }
+        
+        int choice = getIntInput("Select category (1-" + categories.size() + "): ");
+        
+        if (choice >= 1 && choice <= categories.size()) {
+            menu.displayByCategory(categories.get(choice - 1));
+        } else {
+            System.out.println("⚠ Invalid category selection.");
+        }
+    }
+    
+    private void addNewItem() {
+        System.out.println("=== Add New Menu Item ===");
+        
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        
+        System.out.print("Description: ");
+        String description = scanner.nextLine();
+        
+        double price = getDoubleInput("Price: $");
+        
+        System.out.print("Category: ");
+        String category = scanner.nextLine();
+        
+        MenuItems newItem = new MenuItems(name, description, price, category);
+        menu.addItem(newItem);
+    }
+    
+    private void removeItem() {
+        System.out.print("Enter name of item to remove: ");
+        String name = scanner.nextLine();
+        menu.removeItem(name);
+    }
+    
+    private void updateItem() {
+        System.out.print("Enter name of item to update: ");
+        String oldName = scanner.nextLine();
+        
+        MenuItems existingItem = menu.searchItem(oldName);
+        if (existingItem == null) {
+            System.out.println("⚠ Item not found: " + oldName);
+            return;
+        }
+        
+        System.out.println("Current item: " + existingItem);
+        System.out.println("\nEnter new details (press Enter to keep current value):");
+        
+        System.out.print("Name [" + existingItem.getName() + "]: ");
+        String name = scanner.nextLine();
+        if (name.trim().isEmpty()) name = existingItem.getName();
+        
+        System.out.print("Description [" + existingItem.getDescription() + "]: ");
+        String description = scanner.nextLine();
+        if (description.trim().isEmpty()) description = existingItem.getDescription();
+        
+        System.out.print("Price [" + existingItem.getPrice() + "]: $");
+        String priceStr = scanner.nextLine();
+        double price = priceStr.trim().isEmpty() ? existingItem.getPrice() : Double.parseDouble(priceStr);
+        
+        System.out.print("Category [" + existingItem.getCategory() + "]: ");
+        String category = scanner.nextLine();
+        if (category.trim().isEmpty()) category = existingItem.getCategory();
+        
+        MenuItems updatedItem = new MenuItems(name, description, price, category);
+        menu.updateItem(oldName, updatedItem);
+    }
+    
+    private void searchItem() {
+        System.out.print("Enter item name to search: ");
+        String name = scanner.nextLine();
+        
+        MenuItems item = menu.searchItem(name);
+        if (item != null) {
+            System.out.println("\n✓ Found:");
+            System.out.println(item);
+        } else {
+            System.out.println("⚠ Item not found: " + name);
+        }
+    }
+    
+    private void reloadMenu() {
+        System.out.println("Reloading menu from file...");
+        menu.loadFromFile();
+        System.out.println("✓ Menu reloaded! Total items: " + menu.getItemCount());
+    }
+    
+    private int getIntInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                int value = Integer.parseInt(scanner.nextLine());
+                return value;
+            } catch (NumberFormatException e) {
+                System.out.println("⚠ Please enter a valid number.");
+            }
+        }
+    }
+    
+    private double getDoubleInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                double value = Double.parseDouble(scanner.nextLine());
+                return value;
+            } catch (NumberFormatException e) {
+                System.out.println("⚠ Please enter a valid number.");
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Restaurant restaurant = new Restaurant("The Grand Bistro");
+        restaurant.run();
+    }
 }
-
-
-
-
-
