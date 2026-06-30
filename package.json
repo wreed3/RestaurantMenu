@@ -1,0 +1,12 @@
+{
+  "name": "restaurant-menu",
+  "version": "1.0.0",
+  "description": "Restaurant Menu Management Application",
+  "scripts": {
+    "start": "npx serve -s . -l 3000",
+    "dev": "npx serve -s . -l 3000"
+  },
+  "keywords": ["restaurant", "menu", "management"],
+  "author": "",
+  "license": "MIT"
+}
