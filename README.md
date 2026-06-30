@@ -1,257 +1,215 @@
 # Restaurant Menu Application
 
-A Java-based restaurant menu management system with **editable external file storage**. Menu items are stored in a CSV file that can be edited without touching the code!
+A modern, browser-based restaurant menu management system with **real-time editing** and **CSV import/export**. No server or database required — runs entirely in your browser!
 
-## Features
+## ✨ Features
 
-- ✅ **Easy Editing**: Edit menu items in Excel, Google Sheets, or any text editor
-- ✅ **Auto-save**: Changes made through the app are automatically saved
-- ✅ **Hot Reload**: Reload menu from file without restarting the application
-- ✅ **Full CRUD**: Create, Read, Update, and Delete menu items
-- ✅ **Category Organization**: Browse items by category (Appetizers, Main Course, Desserts, Beverages)
-- ✅ **Search Functionality**: Find items by name
-- ✅ **No Database Required**: Simple CSV file storage
+- 🌐 **Browser-Based**: Runs entirely in the browser, no installation needed
+- 💾 **Auto-Save**: Changes automatically saved to browser storage
+- 📥 **CSV Import/Export**: Import existing menus or export for backup
+- ✏️ **Full CRUD**: Create, Read, Update, and Delete menu items
+- 🏷️ **Category Organization**: Browse items by Appetizers, Main Courses, Desserts, Beverages
+- 🔍 **Real-Time Search**: Instant search by name or description
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile
+- 🎨 **Modern UI**: Clean, intuitive interface with smooth animations
 
-## Quick Start
+## 🚀 Quick Start
 
-### 1. Compile and Run
+### Option 1: Open in Browser
+
+Simply open `index.html` in any modern web browser:
 
 ```bash
-# Compile
-javac src/restautant/*.java
+# Using Python (if installed)
+python -m http.server 8000
 
-# Run
-java -cp src restautant.Restaurant
+# Using Node.js (if installed)
+npx serve
+
+# Or just double-click index.html
 ```
 
-### 2. Edit Menu Items
+Then navigate to `http://localhost:8000` or the file directly.
 
-The menu is stored in `menu_items.csv` in the project root. You can edit this file in:
+### Option 2: Live Preview
 
-- **Excel/Google Sheets**: Open as spreadsheet
-- **Text Editor**: Edit as plain text (VS Code, Notepad++, etc.)
-- **Command Line**: Use any CSV editor
+If you're using VS Code:
+1. Install the "Live Server" extension
+2. Right-click `index.html`
+3. Select "Open with Live Server"
 
-**File Format:**
+## 📖 How to Use
+
+### Managing Menu Items
+
+1. **View All Items**: See your complete menu at a glance
+2. **Browse by Category**: Filter items by type (Appetizers, Main Course, etc.)
+3. **Search**: Type to instantly find items by name or description
+4. **Add New Item**: Click "Add Item" and fill out the form
+5. **Edit Item**: Click the ✏️ edit button on any menu card
+6. **Delete Item**: Click the 🗑️ delete button (with confirmation)
+
+### Import/Export CSV
+
+#### Export Your Menu
+1. Click "📤 Export CSV" button
+2. Save the `menu_items.csv` file
+3. Edit in Excel, Google Sheets, or any text editor
+
+#### Import a Menu
+1. Click "📥 Import CSV" button
+2. Select your CSV file
+3. Menu items will be loaded instantly
+
+### CSV File Format
+
+Your CSV file should have this structure:
+
 ```csv
 name,description,price,category
 Spring Rolls,Crispy vegetable spring rolls with sweet chili sauce,6.99,Appetizer
 Grilled Salmon,Fresh Atlantic salmon with lemon butter,18.99,Main Course
-```
-
-### 3. Reload Changes
-
-After editing the CSV file:
-
-1. In the application, select option **7** (Reload menu from file)
-2. Your changes will be loaded immediately!
-
-## Menu File Structure
-
-### CSV Format
-
-The `menu_items.csv` file has four columns:
-
-| Column | Description | Example |
-|--------|-------------|---------|
-| name | Item name | "Grilled Salmon" |
-| description | Item description | "Fresh Atlantic salmon with lemon butter" |
-| price | Price (number) | 18.99 |
-| category | Category name | "Main Course" |
-
-### Example File
-
-```csv
-name,description,price,category
-Spring Rolls,Crispy vegetable spring rolls with sweet chili sauce,6.99,Appetizer
-Bruschetta,Toasted bread with tomatoes and basil,7.50,Appetizer
-Grilled Salmon,Fresh Atlantic salmon with lemon butter,18.99,Main Course
-Beef Burger,Angus beef burger with fries,12.99,Main Course
 Chocolate Cake,Rich chocolate layer cake,6.50,Dessert
 Coffee,Freshly brewed coffee,2.99,Beverage
 ```
 
-## Editing Guidelines
+**Column Requirements:**
+- `name` - Item name (text)
+- `description` - Item description (text)
+- `price` - Price (number, e.g., 12.99)
+- `category` - One of: Appetizer, Main Course, Dessert, Beverage
 
-### ✅ Do's
-
+**Tips:**
+- If descriptions contain commas, wrap in quotes: `"Pasta, with sauce"`
 - Keep the header row: `name,description,price,category`
 - Use decimal format for prices: `12.99` not `$12.99`
-- Use standard categories: Appetizer, Main Course, Dessert, Beverage
-- Save as CSV format (not XLSX)
 
-### ❌ Don'ts
-
-- Don't use commas in descriptions (or wrap in quotes: `"Pasta, with sauce"`)
-- Don't delete the header row
-- Don't use special characters in prices
-- Don't leave blank rows (except at the end)
-
-### Handling Commas in Text
-
-If your description contains commas, wrap it in quotes:
-
-```csv
-name,description,price,category
-"Surf & Turf","Lobster, steak, and vegetables",29.99,Main Course
-```
-
-## Application Features
-
-### Main Menu Options
-
-1. **View full menu** - Display all items organized by category
-2. **View by category** - Filter items by specific category
-3. **Add new item** - Add a new menu item (auto-saves to file)
-4. **Remove item** - Delete an item by name (auto-saves to file)
-5. **Update item** - Modify an existing item (auto-saves to file)
-6. **Search for item** - Find an item by name
-7. **Reload menu from file** - Load changes from CSV file
-8. **Exit** - Close the application
-
-### Auto-Save
-
-Any changes made through the application (add, update, remove) are **automatically saved** to the CSV file. No manual save required!
-
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 RestaurantMenu/
-├── src/
-│   └── restautant/
-│       ├── Restaurant.java    # Main application
-│       ├── Menu.java          # Menu management with file I/O
-│       └── MenuItems.java     # Menu item model
-├── menu_items.csv             # Editable menu data (THIS FILE!)
-└── README.md                  # This file
+├── index.html          # Main HTML structure
+├── styles.css          # Modern, responsive styling
+├── app.js              # Application logic (MenuManager class)
+├── menu_items.csv      # Original sample data (reference)
+└── README.md           # This file
 ```
 
-## Technical Details
+## 💾 Data Storage
 
-### File I/O
+- **Browser Storage**: Menu items are saved to `localStorage`
+- **Persistent**: Data survives page refreshes
+- **Per-Browser**: Each browser has its own storage
+- **Export Backup**: Use CSV export to backup your menu
 
-- **Loading**: Menu is loaded from `menu_items.csv` on startup
-- **Saving**: Changes are written to file after each modification
-- **Error Handling**: Invalid lines are skipped with error messages
-- **Default Data**: If file is missing, a default menu is created
+## 🎨 Features in Detail
 
-### CSV Parsing
+### Real-Time Updates
+All changes are immediately reflected in the UI and saved to browser storage.
 
-The application handles:
-- Quoted fields (for commas in text)
-- Empty lines (skipped)
-- Invalid data (logged as errors)
-- Missing file (creates default)
+### Category System
+Four built-in categories with emoji icons:
+- 🥟 Appetizers
+- 🍖 Main Courses
+- 🍰 Desserts
+- ☕ Beverages
 
-## Troubleshooting
+### Search Functionality
+- Searches both item names and descriptions
+- Updates results as you type (300ms debounce)
+- Case-insensitive matching
 
-### Menu Not Loading
+### Responsive Design
+- Desktop: Multi-column grid layout
+- Tablet: Adaptive grid
+- Mobile: Single-column layout
+- Touch-friendly buttons and interactions
 
-**Problem**: Menu shows as empty or doesn't load
+## 🔧 Technical Details
 
-**Solution**:
-1. Check that `menu_items.csv` exists in the project root
-2. Verify the file has the correct header row
-3. Check for syntax errors in the CSV
-4. Look for error messages when the app starts
+### Technologies Used
+- **HTML5**: Semantic structure
+- **CSS3**: Modern styling with CSS Grid and Flexbox
+- **Vanilla JavaScript**: No frameworks or dependencies
+- **localStorage API**: Client-side data persistence
+- **FileReader API**: CSV import functionality
 
-### Changes Not Appearing
+### Browser Compatibility
+Works in all modern browsers:
+- ✅ Chrome/Edge (v90+)
+- ✅ Firefox (v88+)
+- ✅ Safari (v14+)
+- ✅ Opera (v76+)
 
-**Problem**: Edited the CSV but changes don't show in app
+### No Dependencies
+This application has **zero external dependencies**. Everything runs with native browser APIs.
 
-**Solution**:
-1. Save the CSV file
-2. In the app, select option **7** (Reload menu)
-3. Or restart the application
+## 🔄 Migration from Java Version
 
-### File Corruption
+This web version replaces the original Java console application with:
 
-**Problem**: CSV file is corrupted or has errors
+- ✅ Modern browser-based UI instead of terminal interface
+- ✅ Point-and-click instead of numbered menus
+- ✅ localStorage instead of CSV file I/O
+- ✅ CSV import/export for compatibility
+- ✅ Real-time search and filtering
+- ✅ Responsive design for all devices
 
-**Solution**:
-1. Delete `menu_items.csv`
-2. Restart the application
-3. A new default file will be created
+All original features are preserved:
+- View full menu ✓
+- View by category ✓
+- Add new items ✓
+- Update existing items ✓
+- Delete items ✓
+- Search by name ✓
+- Load/save menu data ✓
 
-### Special Characters
+## 📝 Example Usage
 
-**Problem**: Descriptions with commas break the layout
+### Adding a New Item
 
-**Solution**:
-Wrap the description in quotes:
-```csv
-name,description,price,category
-Combo Meal,"Burger, fries, and drink",15.99,Main Course
-```
+1. Click "➕ Add Item"
+2. Fill in the form:
+   - Name: "Caesar Salad"
+   - Description: "Romaine lettuce with parmesan and croutons"
+   - Price: 8.99
+   - Category: Appetizer
+3. Click "Add Item"
+4. Item appears immediately in the menu
 
-## Advanced Usage
+### Editing an Item
 
-### Bulk Editing
+1. Find the item in any view
+2. Click the ✏️ edit button
+3. Modify the fields
+4. Click "Update Item"
 
-1. Open `menu_items.csv` in Excel or Google Sheets
-2. Make multiple changes at once
-3. Save as CSV
-4. Reload in the application (option 7)
+### Importing a Menu
 
-### Backup
+1. Prepare your CSV file with the correct format
+2. Click "📥 Import CSV"
+3. Select your file
+4. All items are loaded and saved
 
-Create a backup before making major changes:
+## 🎯 Future Enhancements
 
-```bash
-cp menu_items.csv menu_items.backup.csv
-```
+Possible additions:
+- 🖼️ Image upload for menu items
+- 💰 Currency selection
+- 🌍 Multi-language support
+- 📊 Price analytics
+- 🎨 Theme customization
+- 📤 Export to PDF
+- 🔗 Share menu via link
 
-### Version Control
+## 📄 License
 
-The CSV format is git-friendly:
+This project is open source and available for educational purposes.
 
-```bash
-git add menu_items.csv
-git commit -m "Updated menu prices"
-```
+## 🤝 Contributing
 
-### Different Restaurants
-
-Create multiple CSV files for different restaurants:
-
-```bash
-menu_italian.csv
-menu_chinese.csv
-menu_mexican.csv
-```
-
-Modify `Restaurant.java` to load the desired file:
-
-```java
-this.menu = new Menu("menu_italian.csv");
-```
-
-## Future Enhancements
-
-Potential improvements:
-- [ ] JSON format support (better structure)
-- [ ] Image URLs for menu items
-- [ ] Multi-language support
-- [ ] Price history tracking
-- [ ] Nutritional information
-- [ ] Allergen warnings
-- [ ] Inventory management
-- [ ] Daily specials
-
-## License
-
-This is a sample educational project. Feel free to use and modify as needed.
-
-## Support
-
-For issues or questions:
-1. Check this README
-2. Verify CSV file format
-3. Look at console error messages
-4. Review the example `menu_items.csv`
+Feel free to fork, modify, and submit pull requests!
 
 ---
 
-**Happy Editing!** 🍽️
-
-Remember: You can edit the menu anytime by opening `menu_items.csv` in your favorite editor!
+**Note**: This is a client-side application. All data is stored in your browser's localStorage. To backup your menu, use the CSV export feature regularly.
