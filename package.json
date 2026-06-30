@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Restaurant Menu Management Application",
   "scripts": {
+    "build": "echo 'No build needed - static HTML/CSS/JS app'",
     "start": "npx serve -s . -l 3000",
     "dev": "npx serve -s . -l 3000"
   },
